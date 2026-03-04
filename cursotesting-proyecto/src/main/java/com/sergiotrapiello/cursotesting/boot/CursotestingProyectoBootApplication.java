@@ -18,11 +18,13 @@ public class CursotestingProyectoBootApplication {
 
 	public static void main(String[] args) throws SQLException {
 
-		Connection connJbdc = DriverManager.getConnection("jdbc:h2:mem:test;INIT=runscript from 'classpath:schema.sql'", "sa", "");
+		Connection connJbdc = DriverManager.getConnection("jdbc:h2:mem:test;INIT=runscript from 'classpath:schema.sql'",
+				"sa", "");
 		TicketRepositoryPort ticketRepositoryImpl = new TicketRepositoryPortImpl(connJbdc);
-		TicketServiceImpl  ticketServiceImpl= new TicketServiceImpl(Clock.systemDefaultZone(),ticketRepositoryImpl);
+		TicketServiceImpl ticketServiceImpl = new TicketServiceImpl(Clock.systemDefaultZone(), 0.34, 30.0,
+				ticketRepositoryImpl);
 		TicketController ticketController = new TicketController(ticketServiceImpl);
-		
+
 		Set<Controller> controllers = Set.of(ticketController);
 
 		RequestDispatcher dispatcher = new RequestDispatcher(controllers);
